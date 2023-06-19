@@ -3,6 +3,10 @@ mod port;
 mod wire_man;
 mod slv_man;
 
+use std::fs;
+use std::fs::File;
+use std::io::Write;
+
 use serde::Serialize;
 use tinytemplate::TinyTemplate;
 
@@ -13,6 +17,44 @@ use slv_man::SlvMan;
 const CONTROLLER_V: &'static str = include_str!("../template/controller.v");
 const CONTROLLER_AXI_V: &'static str = include_str!("../template/controller_AXI.v");
 const CONTROLLER_AG_V: &'static str = include_str!("../template/controller_auto_generated.v");
+
+#[allow(non_snake_case)]
+pub struct Controller {
+    name: String,
+    controller_v: String,
+    controller_AXI_v: String,
+    controller_auto_generated_v: String,
+}
+
+impl Controller {
+    #[allow(non_snake_case)]
+    pub fn new(name: String, controller_v: String, controller_AXI_v: String, controller_auto_generated_v: String) -> Controller {
+        Controller {
+            name,
+            controller_v,
+            controller_AXI_v,
+            controller_auto_generated_v,
+        }
+    }
+
+    pub fn save(&self, dir: impl Into<String>) -> Result<(), Box<dyn std::error::Error>> {
+        let dir = dir.into();
+        let _ = fs::create_dir(&dir);
+
+        Self::__save(dir.clone()+"/"+&self.name+"_controller.v", &self.controller_v)?;
+        Self::__save(dir.clone()+"/"+&self.name+"_controller_AXI.v", &self.controller_AXI_v)?;
+        Self::__save(dir        +"/"+&self.name+"_controller_auto_generated.v", &self.controller_auto_generated_v)?;
+
+        Ok(())
+    }
+
+    fn __save(fname: String, body: &String) -> Result<(), Box<dyn std::error::Error>> {
+        let mut f = File::create(fname)?;
+        write!(f, "{}", body)?;
+        f.flush()?;
+        Ok(())
+    }
+}
 
 #[allow(non_snake_case)]
 #[derive(Serialize)]
@@ -33,12 +75,14 @@ struct Template {
     SLV_ICACHE_REGISTERS_ASSIGN: String,
 }
 
-pub fn generate<'a>(name: impl Into<String>, clock_port: impl Into<String>, ports: &'a Vec<Port>) -> Result<(String, String, String), Box<dyn std::error::Error>> {
+pub fn generate<'a>(name: impl Into<String>, clock_port: impl Into<String>, ports: &'a Vec<Port>) -> Result<Controller, Box<dyn std::error::Error>> {
+    let name = name.into();
+
     let wire_man = WireMan::from(ports);
     let slv_man = SlvMan::from(ports);
 
     let context = Template {
-        NAME: name.into(),
+        NAME: name.clone(),
         CLOCK: clock_port.into(),
         WIRE_DEFINITIONS: wire_man.gen_wire_definitions(),
         WIRE_CONNECTIONS: wire_man.gen_wire_connctions(),
@@ -60,7 +104,8 @@ pub fn generate<'a>(name: impl Into<String>, clock_port: impl Into<String>, port
     tt.add_template("controller_AXI.v", CONTROLLER_AXI_V)?;
     tt.add_template("controller_auto_generated.v", CONTROLLER_AG_V)?;
 
-    Ok((
+    Ok(Controller::new(
+        name,
         tt.render("controller.v", &context)?,
         tt.render("controller_AXI.v", &context)?,
         tt.render("controller_auto_generated.v", &context)?,
