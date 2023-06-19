@@ -5,11 +5,6 @@ module {NAME}_controller #
     )
     (
         // 回路接続
-        // input wire          CCLK,
-        // output wire         CRST,
-        // output wire         CEXEC,
-        // output wire [31:0]  CMEM_ADDR,
-        // input wire          CSTAT,
         {WIRE_DEFINITIONS}
 
         // AXIバス
@@ -41,11 +36,6 @@ module {NAME}_controller #
         .C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH)
     ) {NAME}_controller_AXI_inst (
         // 回路接続
-        // .CCLK(CCLK),
-        // .CRST(CRST),
-        // .CEXEC(CEXEC),
-        // .CMEM_ADDR(CMEM_ADDR),
-        // .CSTAT(CSTAT),
         {WIRE_CONNECTIONS}
 
         // AXIバス
