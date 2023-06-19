@@ -88,11 +88,11 @@ impl<'a> SlvMan<'a> {
         )
     }
 
-    // SLV_ICACHE_REGISTERS_RESET
-    pub fn gen_slv_icache_registers_reset(&self) -> String {
+    // SLV_ICACHE_REGISTERS_SET`
+    pub fn gen_slv_icache_registers_set(&self) -> String {
         port_maps!(
             self.ports, PortKind::Output,
-            (|(i, p)| format!("icache_slv_reg{}[0] <= {}'b0; icache_slv_reg{}[1] <= {}'b0;", i, p.width, i, p.width)),
+            (|(i, p)| format!("icache_slv_reg{}[1] <= icache_slv_reg{}[0]; icache_slv_reg{}[0] <= {};", i, i, i, p.name)),
             "\n"
         )
     }
