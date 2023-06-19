@@ -40,7 +40,7 @@ impl Port {
         format!(".{}({}),", self.name, self.name)
     }
 
-    fn fmt_width(&self) -> String {
+    pub fn fmt_width(&self) -> String {
         if self.width == 1 {
             "".to_string()
         } else {
