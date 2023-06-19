@@ -11,8 +11,8 @@ use serde::Serialize;
 use tinytemplate::TinyTemplate;
 
 pub use port::{Port, PortKind};
-use wire_man::WireMan;
 use slv_man::SlvMan;
+use wire_man::WireMan;
 
 const CONTROLLER_V: &'static str = include_str!("../template/controller.v");
 const CONTROLLER_AXI_V: &'static str = include_str!("../template/controller_AXI.v");
@@ -28,7 +28,12 @@ pub struct Controller {
 
 impl Controller {
     #[allow(non_snake_case)]
-    pub fn new(name: String, controller_v: String, controller_AXI_v: String, controller_auto_generated_v: String) -> Controller {
+    pub fn new(
+        name: String,
+        controller_v: String,
+        controller_AXI_v: String,
+        controller_auto_generated_v: String,
+    ) -> Controller {
         Controller {
             name,
             controller_v,
@@ -41,9 +46,18 @@ impl Controller {
         let dir = dir.into();
         let _ = fs::create_dir(&dir);
 
-        Self::__save(dir.clone()+"/"+&self.name+"_controller.v", &self.controller_v)?;
-        Self::__save(dir.clone()+"/"+&self.name+"_controller_AXI.v", &self.controller_AXI_v)?;
-        Self::__save(dir        +"/"+&self.name+"_controller_auto_generated.v", &self.controller_auto_generated_v)?;
+        Self::__save(
+            dir.clone() + "/" + &self.name + "_controller.v",
+            &self.controller_v,
+        )?;
+        Self::__save(
+            dir.clone() + "/" + &self.name + "_controller_AXI.v",
+            &self.controller_AXI_v,
+        )?;
+        Self::__save(
+            dir + "/" + &self.name + "_controller_auto_generated.v",
+            &self.controller_auto_generated_v,
+        )?;
 
         Ok(())
     }
@@ -75,7 +89,11 @@ struct Template {
     SLV_ICACHE_REGISTERS_ASSIGN: String,
 }
 
-pub fn generate<'a>(name: impl Into<String>, clock_port: impl Into<String>, ports: &'a Vec<Port>) -> Result<Controller, Box<dyn std::error::Error>> {
+pub fn generate<'a>(
+    name: impl Into<String>,
+    clock_port: impl Into<String>,
+    ports: &'a Vec<Port>,
+) -> Result<Controller, Box<dyn std::error::Error>> {
     let name = name.into();
 
     let wire_man = WireMan::from(ports);

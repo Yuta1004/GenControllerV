@@ -1,7 +1,7 @@
 use gencontroller_v::generate;
 use gencontroller_v::{Port, PortKind};
 
-fn main() -> Result<(), Box<dyn std::error::Error>>{
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let ports = vec![
         Port::new(PortKind::Input, "CRST", 1, 0x0000),
         Port::new(PortKind::Input, "CEXEC", 1, 0x0004),

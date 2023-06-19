@@ -11,7 +11,7 @@ impl Display for PortKind {
         // Controllerへのinputは接続先回路から見るとoutputになる（その逆も同じ）
         match self {
             PortKind::Input => write!(f, "output"),
-            PortKind::Output => write!(f, "input")
+            PortKind::Output => write!(f, "input"),
         }
     }
 }
@@ -27,8 +27,10 @@ impl Port {
     pub fn new(kind: PortKind, name: impl Into<String>, width: u32, addr: u32) -> Port {
         assert!(width > 0);
         Port {
-            kind, width, addr,
-            name: name.into()
+            kind,
+            width,
+            addr,
+            name: name.into(),
         }
     }
 
@@ -36,7 +38,7 @@ impl Port {
         if self.width == 1 {
             "".to_string()
         } else {
-            format!("[{}:0]", self.width-1)
+            format!("[{}:0]", self.width - 1)
         }
     }
 }
