@@ -2,6 +2,7 @@ use std::fmt;
 use std::fmt::Display;
 
 pub enum PortKind {
+    Clock,
     Input,
     Output,
 }
@@ -12,6 +13,7 @@ impl Display for PortKind {
         match self {
             PortKind::Input => write!(f, "output"),
             PortKind::Output => write!(f, "input"),
+            PortKind::Clock => write!(f, "input"),
         }
     }
 }

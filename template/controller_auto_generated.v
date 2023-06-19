@@ -5,7 +5,6 @@ module {NAME}_controller_auto_generated #
     )
     (
         // 回路接続
-        input wire {CLOCK},
         {WIRE_DEFINITIONS}
 
         // AXIバス

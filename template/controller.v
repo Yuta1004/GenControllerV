@@ -5,7 +5,6 @@ module {NAME}_controller #
     )
     (
         // 回路接続
-        input wire {CLOCK},
         {WIRE_DEFINITIONS}
 
         // AXIバス
@@ -37,7 +36,6 @@ module {NAME}_controller #
         .C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH)
     ) {NAME}_controller_AXI_inst (
         // 回路接続
-        .{CLOCK}({CLOCK}),
         {WIRE_CONNECTIONS}
 
         // AXIバス

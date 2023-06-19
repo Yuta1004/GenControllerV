@@ -91,17 +91,21 @@ struct Template {
 
 pub fn generate<'a>(
     name: impl Into<String>,
-    clock_port: impl Into<String>,
     ports: &'a Vec<Port>,
 ) -> Result<Controller, Box<dyn std::error::Error>> {
     let name = name.into();
+
+    let clock_port = ports
+        .iter()
+        .find(|p| matches!(p.kind, PortKind::Clock))
+        .ok_or("Ports must contain \"PortKind::Clock\" port.")?;
 
     let wire_man = WireMan::from(ports);
     let slv_man = SlvMan::from(ports);
 
     let context = Template {
         NAME: name.clone(),
-        CLOCK: clock_port.into(),
+        CLOCK: clock_port.name.to_string(),
         WIRE_DEFINITIONS: wire_man.gen_wire_definitions(),
         WIRE_CONNECTIONS: wire_man.gen_wire_connctions(),
         SLV_REGISTERS: slv_man.gen_slv_registers(),
