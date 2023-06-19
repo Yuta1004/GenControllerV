@@ -32,14 +32,6 @@ impl Port {
         }
     }
 
-    pub fn gen_wire_definition(&self) -> String {
-        format!("{} wire {} {},", self.kind, self.fmt_width(), self.name)
-    }
-
-    pub fn gen_wire_connection(&self) -> String {
-        format!(".{}({}),", self.name, self.name)
-    }
-
     pub fn fmt_width(&self) -> String {
         if self.width == 1 {
             "".to_string()
