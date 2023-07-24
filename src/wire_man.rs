@@ -16,6 +16,7 @@ impl<'a> From<&'a Vec<Port>> for WireMan<'a> {
 }
 
 impl<'a> WireMan<'a> {
+    #[allow(unused_parens)]
     pub fn gen_wire_definitions(&self) -> String {
         port_maps!(
             self.ports,
@@ -24,6 +25,7 @@ impl<'a> WireMan<'a> {
         ) + ","
     }
 
+    #[allow(unused_parens)]
     pub fn gen_wire_connctions(&self) -> String {
         port_maps!(
             self.ports,

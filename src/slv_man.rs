@@ -17,6 +17,7 @@ impl<'a> From<&'a Vec<Port>> for SlvMan<'a> {
 
 impl<'a> SlvMan<'a> {
     // SLV_REGISTERS
+    #[allow(unused_parens)]
     pub fn gen_slv_registers(&self) -> String {
         port_maps!(
             self.ports,
@@ -27,6 +28,7 @@ impl<'a> SlvMan<'a> {
     }
 
     // SLV_REGISTERS_RESET
+    #[allow(unused_parens)]
     pub fn gen_slv_registers_reset(&self) -> String {
         port_maps!(
             self.ports,
@@ -37,6 +39,7 @@ impl<'a> SlvMan<'a> {
     }
 
     // SLV_REGISTERS_SET
+    #[allow(unused_parens)]
     pub fn gen_slv_registers_set(&self) -> String {
         port_maps!(
             self.ports,
@@ -47,6 +50,7 @@ impl<'a> SlvMan<'a> {
     }
 
     // SLV_OCACHE_REGISTERS
+    #[allow(unused_parens)]
     pub fn gen_slv_ocache_registers(&self) -> String {
         port_maps!(
             self.ports,
@@ -57,6 +61,7 @@ impl<'a> SlvMan<'a> {
     }
 
     // SLV_OCACHE_REGISTERS_ASSIGN
+    #[allow(unused_parens)]
     pub fn gen_slv_ocache_registers_assign(&self) -> String {
         port_maps!(
             self.ports,
@@ -67,6 +72,7 @@ impl<'a> SlvMan<'a> {
     }
 
     // SLV_OCACHE_REGISTERS_RESET
+    #[allow(unused_parens)]
     pub fn gen_slv_ocache_registers_reset(&self) -> String {
         port_maps!(
             self.ports,
@@ -80,6 +86,7 @@ impl<'a> SlvMan<'a> {
     }
 
     // SLV_OCACHE_REGISTERS_SET
+    #[allow(unused_parens)]
     pub fn gen_slv_ocache_registers_set(&self) -> String {
         port_maps!(
             self.ports,
@@ -93,6 +100,7 @@ impl<'a> SlvMan<'a> {
     }
 
     // SLV_ICACHE_REGISTERS_SET
+    #[allow(unused_parens)]
     pub fn gen_slv_icache_registers(&self) -> String {
         port_maps!(
             self.ports,
@@ -103,6 +111,7 @@ impl<'a> SlvMan<'a> {
     }
 
     // SLV_ICACHE_REGISTERS_SET`
+    #[allow(unused_parens)]
     pub fn gen_slv_icache_registers_set(&self) -> String {
         port_maps!(
             self.ports,
@@ -116,6 +125,7 @@ impl<'a> SlvMan<'a> {
     }
 
     // SLV_ICACHE_REGISTERS_ASSIGN
+    #[allow(unused_parens)]
     pub fn gen_slv_icache_registers_assign(&self) -> String {
         port_maps!(
             self.ports,
