@@ -105,7 +105,7 @@ impl<'a> SlvMan<'a> {
         port_maps!(
             self.ports,
             PortKind::Output,
-            (|(i, _)| format!("reg icache_slv_reg{} [0:1];", i)),
+            (|(i, p)| format!("reg {} icache_slv_reg{} [0:1];", p.fmt_width(), i)),
             "\n"
         )
     }
